@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
-import { ContactList } from './Filter/ContactList/ContactList';
+import { ContactList } from './ContactList/ContactList';
 import css from './App.module.css';
 
 export class App extends Component {
@@ -16,12 +16,10 @@ export class App extends Component {
   };
 
   addContact = newContact => {
-    if (
-      this.state.contacts.filter(({ name }) => name === newContact.name).length
-    ) {
-      alert(`${newContact.name} is already in contacts.`);
-      return;
-    }
+    const isAlreadyExist = this.state.contacts.find(
+      el => el.name.toLocaleLowerCase() === newContact.name.toLowerCase()
+    );
+    if (isAlreadyExist) return alert('Already Exist');
     this.setState(prevState => ({
       contacts: [newContact, ...prevState.contacts],
     }));
